@@ -7,7 +7,7 @@ function App() {
 	const [size, setSize] = useState(100);
 	const [spacing, setSpacing] = useState(5);
 	const [speed, setSpeed] = useState(10);
-	const [radius, setRadius] = useState(4);
+	const [radius, setRadius] = useState(10);
 	console.log(spacing);
 	return (
 		<div className="w-screen h-screen overflow-hidden bg-blue-300">
