@@ -6,6 +6,7 @@ import "./App.css";
 function App() {
 	const [size, setSize] = useState(100);
 	const [spacing, setSpacing] = useState(5);
+	const [speed, setSpeed] = useState(10);
 	console.log(spacing);
 	return (
 		<div className="w-screen h-screen overflow-hidden bg-blue-300">
@@ -24,9 +25,16 @@ function App() {
 					value={spacing}
 					onChange={setSpacing}
 				/>
+				<LabelledRange
+					label="Speed"
+					min={1}
+					max={100}
+					value={speed}
+					onChange={setSpeed}
+				/>
 			</div>
 			<div className="grid h-full place-content-center">
-				<Box size={size} spacing={spacing} />
+				<Box size={size} spacing={spacing} speed={speed} />
 			</div>
 		</div>
 	);
@@ -65,6 +73,7 @@ const LabelledRange = ({
 interface BoxProps {
 	size: number;
 	spacing: number;
+	speed: number;
 }
 
 interface Position {
@@ -73,7 +82,7 @@ interface Position {
 	z: number;
 }
 
-const Box = ({ size, spacing }: BoxProps) => {
+const Box = ({ size, spacing, speed }: BoxProps) => {
 	const dots = useMemo(() => {
 		let arr = [];
 		for (let x = 0; x <= size + (size / spacing - 1); x += size / spacing) {
@@ -96,12 +105,13 @@ const Box = ({ size, spacing }: BoxProps) => {
 			style={{ width: `${size * 2}px`, height: `${size * 2}px` }}
 		>
 			<div
-				className="transform-gpu cube"
+				className="transform-gpu"
 				style={{
 					transformStyle: "preserve-3d",
 					width: `${size}px`,
 					height: `${size}px`,
 					transformOrigin: `center center ${size / 2}`,
+					animation: `rotate ${100 / speed}s linear infinite`,
 				}}
 			>
 				{dots.map((pos) => (
