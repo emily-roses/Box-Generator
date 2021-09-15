@@ -8,7 +8,7 @@ function App() {
 	const [spacing, setSpacing] = useState(5);
 	console.log(spacing);
 	return (
-		<div className="w-screen h-screen overflow-hidden bg-blue-200">
+		<div className="w-screen h-screen overflow-hidden bg-blue-300">
 			<div className="flex gap-4 bg-gray-100">
 				<LabelledRange
 					label="Size"
@@ -76,9 +76,13 @@ interface Position {
 const Box = ({ size, spacing }: BoxProps) => {
 	const dots = useMemo(() => {
 		let arr = [];
-		for (let x = 0; x <= size; x += size / spacing) {
-			for (let y = 0; y <= size; y += size / spacing) {
-				for (let z = -size / 2; z <= size / 2; z += size / spacing) {
+		for (let x = 0; x <= size + (size / spacing - 1); x += size / spacing) {
+			for (let y = 0; y <= size + (size / spacing - 1); y += size / spacing) {
+				for (
+					let z = -size / 2;
+					z <= size / 2 + (size / spacing - 1);
+					z += size / spacing
+				) {
 					arr.push({ x, y, z });
 				}
 			}
@@ -88,7 +92,7 @@ const Box = ({ size, spacing }: BoxProps) => {
 
 	return (
 		<div
-			className="grid overflow-hidden bg-blue-300 place-content-center"
+			className="grid overflow-hidden place-content-center"
 			style={{ width: `${size * 2}px`, height: `${size * 2}px` }}
 		>
 			<div
