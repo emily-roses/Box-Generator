@@ -35,8 +35,8 @@ function App() {
 				/>
 				<LabelledRange
 					label="Radius"
-					min={2}
-					max={20}
+					min={6}
+					max={30}
 					value={radius}
 					onChange={setRadius}
 				/>
@@ -114,14 +114,16 @@ const Box = ({ size, spacing, speed, radius }: BoxProps) => {
 			style={{ width: `${size * 2}px`, height: `${size * 2}px` }}
 		>
 			<div
-				className="transform-gpu"
-				style={{
-					transformStyle: "preserve-3d",
-					width: `${size}px`,
-					height: `${size}px`,
-					transformOrigin: `center center ${size / 2}`,
-					animation: `rotate ${100 / speed}s linear infinite`,
-				}}
+				className="transform-gpu cube"
+				style={
+					{
+						transformStyle: "preserve-3d",
+						width: `${size}px`,
+						height: `${size}px`,
+						transformOrigin: `center center ${size / 2}`,
+						"--speed": `${100 / speed}s`,
+					} as React.CSSProperties
+				}
 			>
 				{dots.map((pos) => (
 					<Dot position={pos} boxSize={size} radius={radius} />

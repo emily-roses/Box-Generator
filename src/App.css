@@ -1,3 +1,9 @@
+.cube {
+	--speed: 5s;
+	-webkit-animation: rotate var(--speed) linear infinite;
+	        animation: rotate var(--speed) linear infinite;
+}
+
 @-webkit-keyframes rotate {
 	100% {
 		transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
