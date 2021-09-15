@@ -7,10 +7,11 @@ function App() {
 	const [size, setSize] = useState(100);
 	const [spacing, setSpacing] = useState(5);
 	const [speed, setSpeed] = useState(10);
+	const [radius, setRadius] = useState(4);
 	console.log(spacing);
 	return (
 		<div className="w-screen h-screen overflow-hidden bg-blue-300">
-			<div className="flex gap-4 bg-gray-100">
+			<div className="flex justify-center gap-4 bg-gray-100">
 				<LabelledRange
 					label="Size"
 					min={50}
@@ -32,9 +33,16 @@ function App() {
 					value={speed}
 					onChange={setSpeed}
 				/>
+				<LabelledRange
+					label="Radius"
+					min={2}
+					max={20}
+					value={radius}
+					onChange={setRadius}
+				/>
 			</div>
 			<div className="grid h-full place-content-center">
-				<Box size={size} spacing={spacing} speed={speed} />
+				<Box size={size} spacing={spacing} speed={speed} radius={radius} />
 			</div>
 		</div>
 	);
@@ -74,6 +82,7 @@ interface BoxProps {
 	size: number;
 	spacing: number;
 	speed: number;
+	radius: number;
 }
 
 interface Position {
@@ -82,7 +91,7 @@ interface Position {
 	z: number;
 }
 
-const Box = ({ size, spacing, speed }: BoxProps) => {
+const Box = ({ size, spacing, speed, radius }: BoxProps) => {
 	const dots = useMemo(() => {
 		let arr = [];
 		for (let x = 0; x <= size + (size / spacing - 1); x += size / spacing) {
@@ -115,7 +124,7 @@ const Box = ({ size, spacing, speed }: BoxProps) => {
 				}}
 			>
 				{dots.map((pos) => (
-					<Dot position={pos} boxSize={size} />
+					<Dot position={pos} boxSize={size} radius={radius} />
 				))}
 			</div>
 		</div>
@@ -125,9 +134,11 @@ const Box = ({ size, spacing, speed }: BoxProps) => {
 const Dot = ({
 	position,
 	boxSize,
+	radius,
 }: {
 	position: Position;
 	boxSize: number;
+	radius: number;
 }) => {
 	const size = "w-2 h-2";
 
@@ -138,24 +149,30 @@ const Dot = ({
 	return (
 		<>
 			<div
-				className={`absolute ${size} bg-white rounded-full transform-gpu`}
+				className={`absolute  bg-white rounded-full transform-gpu`}
 				style={{
 					transform: `translate3d(${position.x}px, ${position.y}px, ${position.z}px)`,
 					backgroundColor: `rgb(${color}, ${color}, ${color})`,
+					width: radius / 2,
+					height: radius / 2,
 				}}
 			/>
 			<div
-				className={`absolute ${size} bg-white rounded-full transform-gpu`}
+				className={`absolute  bg-white rounded-full transform-gpu`}
 				style={{
 					transform: `translate3d(${position.x}px, ${position.y}px, ${position.z}px) rotateX(90deg)`,
 					backgroundColor: `rgb(${color}, ${color}, ${color})`,
+					width: radius / 2,
+					height: radius / 2,
 				}}
 			/>
 			<div
-				className={`absolute ${size} bg-white rounded-full transform-gpu`}
+				className={`absolute  bg-white rounded-full transform-gpu`}
 				style={{
 					transform: `translate3d(${position.x}px, ${position.y}px, ${position.z}px) rotateY(90deg)`,
 					backgroundColor: `rgb(${color}, ${color}, ${color})`,
+					width: radius / 2,
+					height: radius / 2,
 				}}
 			/>
 		</>
