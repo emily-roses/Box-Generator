@@ -58,7 +58,7 @@ function App() {
 						type="checkbox"
 						id="Wireframe"
 						onChange={() => setWireframe((prev) => !prev)}
-						checked={false}
+						checked={wireframe}
 					/>
 					<label htmlFor="Wireframe"> Wireframe?</label>
 				</div>
