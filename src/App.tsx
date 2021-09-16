@@ -8,10 +8,11 @@ function App() {
 	const [speed, setSpeed] = useState(10);
 	const [radius, setRadius] = useState(10);
 	const [animation, setAnimation] = useState("rotate");
+	const [wireframe, setWireframe] = useState(false);
 	console.log(spacing);
 	return (
 		<div className="w-screen h-screen overflow-hidden bg-blue-300">
-			<div className="flex flex-wrap justify-center gap-4 bg-gray-100">
+			<div className="flex flex-wrap items-center justify-center gap-4 bg-gray-100">
 				<LabelledRange
 					label="Size"
 					min={50}
@@ -21,7 +22,7 @@ function App() {
 				/>
 				<LabelledRange
 					label="Spacing"
-					min={2}
+					min={1}
 					max={9}
 					value={spacing}
 					onChange={setSpacing}
@@ -41,7 +42,7 @@ function App() {
 					onChange={setRadius}
 				/>
 				<select
-					className="m-1 bg-gray-200 rounded"
+					className="p-2 bg-gray-200 rounded"
 					onChange={(e) => setAnimation(e.target.value)}
 				>
 					<option value="rotate">Rotate All</option>
@@ -52,6 +53,15 @@ function App() {
 					<option value="rotateY">Rotate Y</option>
 					<option value="rotateZ">Rotate Z</option>
 				</select>
+				<div>
+					<input
+						type="checkbox"
+						id="Wireframe"
+						onChange={() => setWireframe((prev) => !prev)}
+						checked={false}
+					/>
+					<label htmlFor="Wireframe"> Wireframe?</label>
+				</div>
 			</div>
 			<div className="grid h-full place-content-center">
 				<Box
@@ -60,6 +70,7 @@ function App() {
 					speed={speed}
 					radius={radius}
 					animation={animation}
+					wireframe={wireframe}
 				/>
 			</div>
 		</div>
@@ -103,6 +114,7 @@ interface BoxProps {
 	spacing: number;
 	speed: number;
 	radius: number;
+	wireframe: boolean;
 }
 
 interface Position {
@@ -111,7 +123,14 @@ interface Position {
 	z: number;
 }
 
-const Box = ({ size, spacing, speed, radius, animation }: BoxProps) => {
+const Box = ({
+	size,
+	spacing,
+	speed,
+	radius,
+	animation,
+	wireframe,
+}: BoxProps) => {
 	const dots = useMemo(() => {
 		let arr = [];
 		for (let x = 0; x <= size + (size / spacing - 1); x += size / spacing) {
@@ -144,6 +163,7 @@ const Box = ({ size, spacing, speed, radius, animation }: BoxProps) => {
 			{dots.map((pos) => (
 				<Dot position={pos} boxSize={size} radius={radius} />
 			))}
+			{wireframe && <Wireframe size={size} />}
 		</div>
 	);
 };
@@ -181,6 +201,61 @@ const Dot = ({
 				style={{ backgroundColor: "inherit", rotate: "y 90deg" }}
 			/>
 		</div>
+	);
+};
+
+const Wireframe = ({ size }: { size: number }) => {
+	return (
+		<>
+			<div
+				className="absolute border-2"
+				style={{ translate: `0  0 ${size / 2}px`, width: size }}
+			></div>
+			<div
+				className="absolute border-2"
+				style={{
+					translate: `0  0 ${-size / 2}px`,
+					width: size + 10,
+					height: size + 10,
+				}}
+			></div>
+			<div
+				className="absolute border-2"
+				style={{
+					translate: `0 ${size / 2}px 0`,
+					rotate: "x 90deg",
+					width: size + 10,
+					height: size + 10,
+				}}
+			></div>
+			<div
+				className="absolute border-2"
+				style={{
+					translate: `0 ${-size / 2}px 0`,
+					rotate: "x 90deg",
+					width: size + 10,
+					height: size + 10,
+				}}
+			></div>
+			<div
+				className="absolute border-2"
+				style={{
+					translate: `${size / 2}px`,
+					width: size + 10,
+					height: size + 10,
+					rotate: "y 90deg",
+				}}
+			></div>
+			<div
+				className="absolute border-2"
+				style={{
+					translate: `${-size / 2}px`,
+					width: size + 10,
+					height: size + 10,
+					rotate: "y 90deg",
+				}}
+			></div>
+		</>
 	);
 };
 
