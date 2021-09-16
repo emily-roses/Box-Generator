@@ -21,21 +21,21 @@ function App() {
 				<LabelledRange
 					label="Spacing"
 					min={2}
-					max={10}
+					max={9}
 					value={spacing}
 					onChange={setSpacing}
 				/>
 				<LabelledRange
 					label="Speed"
 					min={0.5}
-					max={75}
+					max={50}
 					value={speed}
 					onChange={setSpeed}
 				/>
 				<LabelledRange
 					label="Radius"
 					min={6}
-					max={30}
+					max={40}
 					value={radius}
 					onChange={setRadius}
 				/>
@@ -109,25 +109,19 @@ const Box = ({ size, spacing, speed, radius }: BoxProps) => {
 
 	return (
 		<div
-			className="grid overflow-hidden place-content-center"
-			style={{ width: `${size * 2}px`, height: `${size * 2}px` }}
+			className="transform-gpu cube"
+			style={
+				{
+					width: `${size}px`,
+					height: `${size}px`,
+					transformOrigin: `center center ${size / 2}`,
+					"--speed": `${100 / speed}s`,
+				} as React.CSSProperties
+			}
 		>
-			<div
-				className="transform-gpu cube"
-				style={
-					{
-						transformStyle: "preserve-3d",
-						width: `${size}px`,
-						height: `${size}px`,
-						transformOrigin: `center center ${size / 2}`,
-						"--speed": `${100 / speed}s`,
-					} as React.CSSProperties
-				}
-			>
-				{dots.map((pos) => (
-					<Dot position={pos} boxSize={size} radius={radius} />
-				))}
-			</div>
+			{dots.map((pos) => (
+				<Dot position={pos} boxSize={size} radius={radius} />
+			))}
 		</div>
 	);
 };
@@ -146,37 +140,25 @@ const Dot = ({
 	}, [position.z, boxSize]);
 
 	return (
-		<>
+		<div
+			className="absolute rounded-full transform-gpu"
+			style={{
+				translate: `${position.x}px ${position.y}px ${position.z}px`,
+				transformStyle: "preserve-3d",
+				width: radius / 2,
+				height: radius / 2,
+				backgroundColor: `rgb(${color}, ${color}, ${color})`,
+			}}
+		>
 			<div
-				className="absolute rounded-full transform-gpu hover:scale-150"
-				style={{
-					backgroundColor: `rgb(${color}, ${color}, ${color})`,
-					width: radius / 2,
-					height: radius / 2,
-					translate: `${position.x}px ${position.y}px ${position.z}px`,
-				}}
+				className="absolute w-full h-full rounded-full transform-gpu"
+				style={{ backgroundColor: "inherit", rotate: "x 90deg" }}
 			/>
 			<div
-				className="absolute rounded-full transform-gpu hover:scale-150"
-				style={{
-					backgroundColor: `rgb(${color}, ${color}, ${color})`,
-					width: radius / 2,
-					height: radius / 2,
-					translate: `${position.x}px ${position.y}px ${position.z}px`,
-					rotate: "x 90deg",
-				}}
+				className="absolute w-full h-full rounded-full transform-gpu"
+				style={{ backgroundColor: "inherit", rotate: "y 90deg" }}
 			/>
-			<div
-				className="absolute rounded-full transform-gpu hover:scale-150"
-				style={{
-					backgroundColor: `rgb(${color}, ${color}, ${color})`,
-					width: radius / 2,
-					height: radius / 2,
-					translate: `${position.x}px ${position.y}px ${position.z}px`,
-					rotate: "y 90deg",
-				}}
-			/>
-		</>
+		</div>
 	);
 };
 

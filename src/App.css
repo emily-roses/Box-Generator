@@ -1,7 +1,8 @@
 .cube {
 	--speed: 5s;
+	transform-style: preserve-3d;
 	-webkit-animation: rotate var(--speed) linear infinite;
-	        animation: rotate var(--speed) linear infinite;
+	animation: rotate var(--speed) linear infinite;
 }
 
 @-webkit-keyframes rotate {
