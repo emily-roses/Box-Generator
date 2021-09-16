@@ -1,5 +1,4 @@
-import React, { useContext, useEffect, useMemo, useState } from "react";
-import { useSpring, a, config } from "@react-spring/web";
+import React, { useMemo, useState } from "react";
 
 import "./App.css";
 
@@ -28,8 +27,8 @@ function App() {
 				/>
 				<LabelledRange
 					label="Speed"
-					min={1}
-					max={100}
+					min={0.5}
+					max={75}
 					value={speed}
 					onChange={setSpeed}
 				/>
@@ -142,8 +141,6 @@ const Dot = ({
 	boxSize: number;
 	radius: number;
 }) => {
-	const size = "w-2 h-2";
-
 	const color = useMemo(() => {
 		return 230 + (position.z / boxSize) * 50;
 	}, [position.z, boxSize]);
@@ -151,49 +148,36 @@ const Dot = ({
 	return (
 		<>
 			<div
-				className={`absolute  bg-white rounded-full transform-gpu`}
+				className="absolute rounded-full transform-gpu hover:scale-150"
 				style={{
-					transform: `translate3d(${position.x}px, ${position.y}px, ${position.z}px)`,
 					backgroundColor: `rgb(${color}, ${color}, ${color})`,
 					width: radius / 2,
 					height: radius / 2,
+					translate: `${position.x}px ${position.y}px ${position.z}px`,
 				}}
 			/>
 			<div
-				className={`absolute  bg-white rounded-full transform-gpu`}
+				className="absolute rounded-full transform-gpu hover:scale-150"
 				style={{
-					transform: `translate3d(${position.x}px, ${position.y}px, ${position.z}px) rotateX(90deg)`,
 					backgroundColor: `rgb(${color}, ${color}, ${color})`,
 					width: radius / 2,
 					height: radius / 2,
+					translate: `${position.x}px ${position.y}px ${position.z}px`,
+					rotate: "x 90deg",
 				}}
 			/>
 			<div
-				className={`absolute  bg-white rounded-full transform-gpu`}
+				className="absolute rounded-full transform-gpu hover:scale-150"
 				style={{
-					transform: `translate3d(${position.x}px, ${position.y}px, ${position.z}px) rotateY(90deg)`,
 					backgroundColor: `rgb(${color}, ${color}, ${color})`,
 					width: radius / 2,
 					height: radius / 2,
+					translate: `${position.x}px ${position.y}px ${position.z}px`,
+					rotate: "y 90deg",
 				}}
 			/>
 		</>
 	);
-};
-
-const useMousePosition = () => {
-	const [position, setPosition] = useState({ x: 0, y: 0 });
-
-	useEffect(() => {
-		window.addEventListener("mousemove", (e) =>
-			setPosition({ x: e.clientX, y: e.clientY }),
-		);
-		return () =>
-			window.removeEventListener("mousemove", (e) =>
-				setPosition({ x: e.clientX, y: e.clientY }),
-			);
-	}, []);
-	return position;
 };
 
 export default App;
