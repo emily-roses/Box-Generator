@@ -7,6 +7,7 @@ function App() {
 	const [spacing, setSpacing] = useState(5);
 	const [speed, setSpeed] = useState(10);
 	const [radius, setRadius] = useState(10);
+	const [animation, setAnimation] = useState("rotate");
 	console.log(spacing);
 	return (
 		<div className="w-screen h-screen overflow-hidden bg-blue-300">
@@ -39,9 +40,27 @@ function App() {
 					value={radius}
 					onChange={setRadius}
 				/>
+				<select
+					className="m-1 bg-gray-200 rounded"
+					onChange={(e) => setAnimation(e.target.value)}
+				>
+					<option value="rotate">Rotate All</option>
+					<option value="rotateXY">Rotate XY</option>
+					<option value="rotateXZ">Rotate XZ</option>
+					<option value="rotateYZ">Rotate YZ</option>
+					<option value="rotateX">Rotate X</option>
+					<option value="rotateY">Rotate Y</option>
+					<option value="rotateZ">Rotate Z</option>
+				</select>
 			</div>
 			<div className="grid h-full place-content-center">
-				<Box size={size} spacing={spacing} speed={speed} radius={radius} />
+				<Box
+					size={size}
+					spacing={spacing}
+					speed={speed}
+					radius={radius}
+					animation={animation}
+				/>
 			</div>
 		</div>
 	);
@@ -79,6 +98,7 @@ const LabelledRange = ({
 };
 
 interface BoxProps {
+	animation: string;
 	size: number;
 	spacing: number;
 	speed: number;
@@ -91,7 +111,7 @@ interface Position {
 	z: number;
 }
 
-const Box = ({ size, spacing, speed, radius }: BoxProps) => {
+const Box = ({ size, spacing, speed, radius, animation }: BoxProps) => {
 	const dots = useMemo(() => {
 		let arr = [];
 		for (let x = 0; x <= size + (size / spacing - 1); x += size / spacing) {
@@ -117,6 +137,7 @@ const Box = ({ size, spacing, speed, radius }: BoxProps) => {
 					height: `${size}px`,
 					transformOrigin: `center center ${size / 2}`,
 					"--speed": `${100 / speed}s`,
+					"--animation": animation,
 				} as React.CSSProperties
 			}
 		>

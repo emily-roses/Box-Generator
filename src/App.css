@@ -1,8 +1,9 @@
 .cube {
 	--speed: 5s;
+	--animation: rotate;
 	transform-style: preserve-3d;
-	-webkit-animation: rotate var(--speed) linear infinite;
-	animation: rotate var(--speed) linear infinite;
+	-webkit-animation: var(--animation) var(--speed) linear infinite;
+	animation: var(--animation) var(--speed) linear infinite;
 }
 
 @-webkit-keyframes rotate {
@@ -14,5 +15,73 @@
 @keyframes rotate {
 	100% {
 		transform: rotateX(360deg) rotateY(360deg) rotateZ(360deg);
+	}
+}
+
+@-webkit-keyframes rotateXY {
+	100% {
+		transform: rotateX(360deg) rotateY(360deg);
+	}
+}
+
+@keyframes rotateXY {
+	100% {
+		transform: rotateX(360deg) rotateY(360deg);
+	}
+}
+
+@-webkit-keyframes rotateXZ {
+	100% {
+		transform: rotateX(360deg) rotateZ(360deg);
+	}
+}
+
+@keyframes rotateXZ {
+	100% {
+		transform: rotateX(360deg) rotateZ(360deg);
+	}
+}
+
+@-webkit-keyframes rotateYZ {
+	100% {
+		transform: rotateY(360deg) rotateZ(360deg);
+	}
+}
+
+@keyframes rotateYZ {
+	100% {
+		transform: rotateY(360deg) rotateZ(360deg);
+	}
+}
+
+@-webkit-keyframes rotateX {
+	100% {
+		transform: rotateX(360deg);
+	}
+}
+
+@keyframes rotateX {
+	100% {
+		transform: rotateX(360deg);
+	}
+}
+@-webkit-keyframes rotateY {
+	100% {
+		transform: rotateY(360deg);
+	}
+}
+@keyframes rotateY {
+	100% {
+		transform: rotateY(360deg);
+	}
+}
+@-webkit-keyframes rotateZ {
+	100% {
+		transform: rotateZ(360deg);
+	}
+}
+@keyframes rotateZ {
+	100% {
+		transform: rotateZ(360deg);
 	}
 }
