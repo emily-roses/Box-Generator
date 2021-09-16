@@ -10,7 +10,7 @@ function App() {
 	console.log(spacing);
 	return (
 		<div className="w-screen h-screen overflow-hidden bg-blue-300">
-			<div className="flex justify-center gap-4 bg-gray-100">
+			<div className="flex flex-wrap justify-center gap-4 bg-gray-100">
 				<LabelledRange
 					label="Size"
 					min={50}
@@ -63,9 +63,10 @@ const LabelledRange = ({
 	onChange,
 }: LabelledRangeProps) => {
 	return (
-		<div className="flex flex-col items-center">
+		<div className="flex flex-col items-center w-1/3 md:w-56">
 			<label htmlFor={label}>{label}</label>
 			<input
+				className="w-full"
 				type="range"
 				id={label}
 				min={min}
