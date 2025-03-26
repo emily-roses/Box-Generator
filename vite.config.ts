@@ -1,7 +1,7 @@
 import { defineConfig } from 'vite'
-import reactRefresh from '@vitejs/plugin-react-refresh'
+import tailwindcss from '@tailwindcss/vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [reactRefresh()]
+    plugins: [tailwindcss()]
 })
